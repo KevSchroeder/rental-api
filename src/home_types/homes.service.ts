@@ -9,26 +9,27 @@ import { Homes } from "./homes.interface";
 
 let homes: Homes = {
     1: {
-      id: 1,
-      name: "Beach House",
-      description: "A single family house right on the beach",
+        id: 1,
+        name: "Beach House",
+        description: "A single family house right on the beach",
     },
     2: {
-      id: 2,
-      name: "Lake House",
-      description: "A single family house on a pristine lake",
+        id: 2,
+        name: "Lake House",
+        description: "A single family house on a pristine lake",
     },
     3: {
-      id: 3,
-      name: "City Apartment",
-      description: "A penthouse apartment right downtown",
+        id: 3,
+        name: "City Apartment",
+        description: "A penthouse apartment right downtown",
     },
     4: {
         id: 4,
-        name: "Farm Barn",
+        name: "Farm",
         description: "An open space farm in the rural countryside",
-      }
-  };
+        }       
+    
+};
 
 /* Service Methods
 create methods to find vacation home elements

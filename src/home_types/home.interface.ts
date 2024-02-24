@@ -7,4 +7,5 @@ export interface BaseHomes {
   
   export interface Home extends BaseHomes {
     id: number;
+
   }
