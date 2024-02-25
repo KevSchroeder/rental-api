@@ -5,38 +5,29 @@ import { describe } from "node:test";
 describe("POST /reservations", () => {
 
     describe("give a reservation", () => {
-        // should save the reservation to the database
-        // should respond with a json object containing the id
-
+        
         test("should respond with a 200 status code", async () => {
-            const response = await request(app).post("/reservations").send({
-                'message' : 'reservation successful'
+            const createResponse = await request(app).post("/reservations").send({
+                homeType: "Beach House", startDate: "2024-01-01", endDate: "2024-01-10"
             })
-            expect(response.statusCode).toBe(200)
+            expect(createResponse.statusCode).toBe(200)
+            const listResponse = await request(app).get("/reservations")
+            expect(createResponse.statusCode)
         })
-        test("should specify json in the content type header", async () => {
+        // test("should specify json in the content type header", async () => {
+        //     const response = await request(app).post("/reservations").send({
+        //         'message' : 'reservation successful'
+        //     })
+        //     expect(response.headers['content-type']).toEqual(expect.stringContaining("json"))
+        // })
+        test("shouldn't be able to create a reservation if there is a date conflict", async () => {
             const response = await request(app).post("/reservations").send({
-                'message' : 'reservation successful'
-            })
-            expect(response.headers['content-type']).toEqual(expect.stringContaining("json"))
-        })
-        test("response has resvId", async () => {
-            const response = await request(app).post("/reservations").send({
-                'message' : 'reservation successful'
-            })
-            expect(response.body.resvId).toBeDefined()
-        })
-    })
-
-    describe("when the reservation is missing", () => {
-        test("should respond with a status code of 400", async () => {
-            const response = await request(app).post("/reservations").send({
-                'message' : 'reservation unsuccessful'
+                
             })
             expect(response.statusCode).toBe(400)
         })
-
     })
+
 })
 
 

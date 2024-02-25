@@ -47,17 +47,11 @@ function isReservationOverlap(reservation: Reservation): boolean {
     );
 }
 
-function createReservation(homeType: string, startDate: string, endDate: string, customerId: string): void {
+function createReservation(homeType: string, startDate: string, endDate: string) {
     // Check if the requested vacation home exists
     const vacationHome = vacationHomes.find(home => home.type === homeType);
     if (!vacationHome) {
         console.error('Vacation home not found');
-        return;
-    }
-
-    // Check if the requested dates are available
-    if (isReservationOverlap({ id: '', homeId: homeType, startDate, endDate })) {
-        console.error('Vacation home already reserved for the specified dates');
         return;
     }
 
@@ -69,13 +63,12 @@ function createReservation(homeType: string, startDate: string, endDate: string,
         endDate,
     };
     reservations.push(reservation);
+    return reservation;
+}; 
 
-    // res.status(201).json(reservation);
-}; //)
-
-createReservation("Lake House","2024-06-01", "2024-06-03", "customer1");
-createReservation("City Apartment", "2024-06-05", "2024-06-07", "customer2");
-createReservation("Beach House", "2024-06-10", "2024-06-15", "customer3");
+createReservation("Lake House","2024-06-01", "2024-06-03");
+createReservation("City Apartment", "2024-06-05", "2024-06-07");
+createReservation("Beach House", "2024-06-10", "2024-06-15");
 
 
 // Endpoint to retrieve all reservations
@@ -115,15 +108,16 @@ app.listen(PORT, () => {
 });
 
 
-app.use(express.json())
+
 app.post('/reservations', (req: Request, res: Response) => {
-    const { homeId, startDate, endDate, resvId } = req.body; 
-    if(!{ homeId, startDate, endDate, resvId }) {
-        res.sendStatus(400)
-        return
+    //res.send(res})
+    const { homeType, startDate, endDate } = req.body;
+    if (isReservationOverlap({ id: '', homeId: homeType, startDate, endDate })) {
+        console.error('Vacation home already reserved for the specified dates');
+        return res.status(400).send('Vacation home already reserved for the specified dates')
     }
-    res.send({resvId: 0})
-    
+    const reservation = createReservation(homeType, startDate, endDate)
+    return res.status(200).json(reservation)
 });
 
 export default app
