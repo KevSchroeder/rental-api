@@ -39,6 +39,8 @@ createVacationHome("Farm", ["2024-03-01", "2024-03-07"])
 
 console.log(vacationHomes)
 
+//see if reservation will overlap
+
 function isReservationOverlap(reservation: Reservation): boolean {
     return reservations.some(existingReservation =>
         existingReservation.homeId === reservation.homeId &&
