@@ -39,25 +39,6 @@ createVacationHome("Farm", ["2024-03-01", "2024-03-07"])
 
 console.log(vacationHomes)
 
-/** Endpoint to create a reservation
-app.post('/reservations', (req: Request, res: Response) => {
-    const { homeId, startDate, endDate, customerId } = req.body;
-
-    // Check if the requested vacation home exists
-    const vacationHome = vacationHomes.find(home => home.id === homeId);
-    if (!vacationHome) {
-        return res.status(404).json({ error: 'Vacation home not found' });
-    }
-
-    // Check if the requested dates are available
-    const overlappingReservation = reservations.find(reservation =>
-        reservation.homeId === homeId &&
-        !(new Date(endDate) <= new Date(reservation.startDate) || new Date(startDate) >= new Date(reservation.endDate))
-    );
-    if (overlappingReservation) {
-        return res.status(400).json({ error: 'Vacation home already reserved for the specified dates' });
-    }
-*/
 function isReservationOverlap(reservation: Reservation): boolean {
     return reservations.some(existingReservation =>
         existingReservation.homeId === reservation.homeId &&
@@ -134,7 +115,15 @@ app.listen(PORT, () => {
 });
 
 
-
+app.use(express.json())
 app.post('/reservations', (req: Request, res: Response) => {
-    const { homeId, startDate, endDate } = req.body; 
+    const { homeId, startDate, endDate, resvId } = req.body; 
+    if(!{ homeId, startDate, endDate, resvId }) {
+        res.sendStatus(400)
+        return
+    }
+    res.send({resvId: 0})
+    
 });
+
+export default app
